@@ -6,19 +6,19 @@ DATE=$(date +%Y-%m-%d_%H-%M-%S)
 # Backup database
 mysqldump -u username -p password database_name > /backup/db_backup_$DATE.sql
 
-# kompres backup DB
+# Compress backup DB
 gzip /backup/db_backup_$DATE.sql
 
-# Upload backup db ke S3
+# Upload backup db ke amazon S3
 aws s3 cp /backup/db_backup_$DATE.sql.gz s3://my-bucket/db_backups/db_backup_$DATE.sql.gz
 
-# Hapus kompres data DB
+# Hapus Compress data DB
 rm /backup/db_backup_$DATE.sql.gz
 
 # Backup file sistem
 tar -czvf /backup/sys_backup_$DATE.tar.gz /var/www/html /etc/apache2 /etc/php/7.2/apache2
 
-# Upload file sistem ke S3
+# Upload file sistem ke amazon S3
 aws s3 cp /backup/sys_backup_$DATE.tar.gz s3://my-bucket/sys_backups/sys_backup_$DATE.tar.gz
 
 # Hapus backup file sistem
